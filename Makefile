@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++2a `xml2-config --cflags`
+CXXFLAGS = -std=c++2a -O3 `xml2-config --cflags`
 
 all: main highways graph extract
 

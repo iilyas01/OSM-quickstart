@@ -1,12 +1,5 @@
 #!/bin/bash
 
-mkdir -p lib
-
-# TinyXML2
-if [ ! -d "lib/tinyxml2" ]; then
-    git clone https://github.com/leethomason/tinyxml2.git lib/tinyxml2
-    echo "Downloaded tinyxml2"
-fi
-
-
-echo "Setup complete. You can now run: make"
+sudo apt install libxml2-dev
+wget https://download.geofabrik.de/north-america/us/new-york-latest.osm.bz2
+bzip2 -d new-york-latest.osm.bz2
