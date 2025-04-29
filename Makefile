@@ -1,32 +1,31 @@
 CXX = g++
-CXXFLAGS = -std=c++2a -Ilib/tinyxml2 
+CXXFLAGS = -std=c++2a `xml2-config --cflags`
 
-OBJS = main.o  lib/tinyxml2/tinyxml2.o
+all: main highways graph extract
 
-H_OBJS = highways.o  lib/tinyxml2/tinyxml2.o
-all: main highways graph
+main: main.o
+	$(CXX) main.o -o main `xml2-config --libs`
 
-main: $(OBJS)
-	$(CXX) $(OBJS) -o main
+graph: graph.o
+	$(CXX) graph.o -o graph `xml2-config --libs`
 
+highways: highways.o
+	$(CXX) highways.o -o highways `xml2-config --libs`
 
-graph: lib/tinyxml2/tinyxml2.o graph.o
-	$(CXX) lib/tinyxml2/tinyxml2.o graph.o -o graph
+extract: extract.o
+	$(CXX) extract.o -o extract `xml2-config --libs`
 
-highways: $(H_OBJS)
-	$(CXX) $(H_OBJS) -o highways
-
-main.o: main.cpp 
+main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
-highways.o: highways.cpp 
-	$(CXX) -I .  $(CXXFLAGS) -c highways.cpp
+highways.o: highways.cpp
+	$(CXX) $(CXXFLAGS) -c highways.cpp
 
-graph.o: graph.cpp 
-	$(CXX) -I .  $(CXXFLAGS) -c graph.cpp
+graph.o: graph.cpp
+	$(CXX) $(CXXFLAGS) -c graph.cpp
 
-lib/tinyxml2/tinyxml2.o: lib/tinyxml2/tinyxml2.cpp
-	$(CXX) $(CXXFLAGS) -c lib/tinyxml2/tinyxml2.cpp -o lib/tinyxml2/tinyxml2.o
+extract.o: extract.cpp
+	$(CXX) $(CXXFLAGS) -c extract.cpp
 
 clean:
-	rm -f *.o graph main highways lib/tinyxml2/*.o
+	rm -f *.o graph main highways extract
