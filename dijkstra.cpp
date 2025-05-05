@@ -97,7 +97,7 @@ void printDistances(const unordered_map<long long, double>& distance) {
     cout << "----------------------------\n";
 }
 
-void dijkstra(long long start) {
+void dijkstra(long long start, long long destination ) {
     unordered_map<long long, double> distance;
     unordered_map<long long, long long> previous;
     unordered_map<long long, bool> visited;
@@ -123,6 +123,26 @@ void dijkstra(long long start) {
 
         cout << "Visiting node " << u << " (distance = " << current.dist << ")\n";
         printDistances(distance);
+
+            if(u == destination) {
+        cout<<"\ndestination"<<destination<<"reached.\n";
+        cout<<"\ndistance"<<distance[u]<<endl: 
+        }
+        vector<long long> path;
+        for(long long t = destination; t != start; t= previous[t]){
+            path.push_back(t);
+        }
+        path.push_back(start);
+        reverse(path.begin(), path.end());
+    
+        cout<<"path";
+        for(size_t i=0; i<path.size(); i++){
+            cout<<path[i];
+            if(i != path.size()-1)
+                cout<<"->";
+        }
+        cout<<endl;
+        return;
 
         for (auto& neighbor : graph[u]) {
             long long v = neighbor.first;
@@ -159,7 +179,10 @@ int main() {
     graph[3][5] = {"alley", 10.0};
     graph[4][5] = {"path", 2.0};
 
-    dijkstra(1);
+    long long source =1;
+    long long destination =5; 
+
+    dijkstra(source, destination);
 
     return 0;
 }
