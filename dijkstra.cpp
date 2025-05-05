@@ -121,12 +121,40 @@ void dijkstra(long long start) {
         if (visited[u]) continue;
         visited[u] = true;
 
+        if (u == destination) {
+            cout << "\nDestination " << destination << " reached.\n";
+            cout << "Total distance: " << distance[u] << endl;
+
+            vector<long long> path;
+            for (long long t = destination; t != start; t = previous[t]) {
+                if (previous.find(t) == previous.end()) {
+                    cout << "No path found.\n";
+                    return;
+                }
+                path.push_back(t);
+            }
+            path.push_back(start);
+            reverse(path.begin(), path.end());
+
+            cout << "Path: ";
+            for (size_t i = 0; i < path.size(); i++) {
+                cout << path[i];
+                if (i != path.size() - 1) cout << " -> ";
+            }
+            cout << endl;
+            return;
+        }
+
         cout << "Visiting node " << u << " (distance = " << current.dist << ")\n";
         printDistances(distance);
 
         for (auto& neighbor : graph[u]) {
             long long v = neighbor.first;
+            string road_type = neighbor.second.first;
             double weight = neighbor.second.second;
+            if(road_type == "alley"){
+                weight += 5.0;
+            }
 
             if (distance[u] + weight < distance[v]) {
                 distance[v] = distance[u] + weight;
@@ -159,7 +187,9 @@ int main() {
     graph[3][5] = {"alley", 10.0};
     graph[4][5] = {"path", 2.0};
 
-    dijkstra(1);
+    long long source = 1;
+    long long destination =4;
+    dijkstra(source, destination);
 
     return 0;
 }
